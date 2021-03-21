@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import Clima from './components/Clima';
 import Formulario from './components/Formulario';
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
       <TouchableWithoutFeedback onPress={() => ocultarTeclado()}>
         <View style={styles.app}>
           <View style={styles.contenido}>
+            <Clima resultado={resultado} />
             <Formulario
               busqueda={busqueda}
               setBusqueda={setBusqueda}
