@@ -1,5 +1,6 @@
 import {
   Animated,
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -9,8 +10,26 @@ import {
 import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 
-export const Formulario = () => {
+export interface Props {
+  busqueda: {pais: string; ciudad: string};
+  setBusqueda: Function;
+}
+
+export const Formulario: React.FC<Props> = ({busqueda, setBusqueda}) => {
+  const {pais, ciudad} = busqueda;
   const [animacionBoton] = useState(new Animated.Value(1));
+  const consultarClima = () => {
+    if (pais.trim() === '' || ciudad.trim() === '') {
+      mostrarAlerta();
+      return;
+    }
+  };
+
+  const mostrarAlerta = () => {
+    Alert.alert('Error', 'Agrega una ciudad y país para la búsqueda', [
+      {text: 'Entendido'},
+    ]);
+  };
   const animacionEntrada = () => {
     Animated.spring(animacionBoton, {
       toValue: 0.9,
@@ -33,13 +52,20 @@ export const Formulario = () => {
       <View>
         <View>
           <TextInput
+            value={ciudad}
             style={styles.input}
+            onChangeText={ciudadIn =>
+              setBusqueda({...busqueda, ciudad: ciudadIn})
+            }
             placeholder="Ciudad"
             placeholderTextColor="#666"
           />
         </View>
         <View>
-          <Picker style={styles.picker}>
+          <Picker
+            onValueChange={paisIn => setBusqueda({...busqueda, paisIn})}
+            selectedValue={pais}
+            style={styles.picker}>
             <Picker.Item
               color="#FFF"
               label="-- Seleccione un páis --"
@@ -56,7 +82,8 @@ export const Formulario = () => {
         </View>
         <TouchableWithoutFeedback
           onPressIn={() => animacionEntrada()}
-          onPressOut={() => animacionSalida()}>
+          onPressOut={() => animacionSalida()}
+          onPress={() => consultarClima()}>
           <Animated.View style={[styles.btnBuscar, estiloAnimacion]}>
             <Text style={styles.textoBuscar}>Buscar Clima</Text>
           </Animated.View>

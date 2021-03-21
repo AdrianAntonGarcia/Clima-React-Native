@@ -4,10 +4,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import React, {useState} from 'react';
 import Formulario from './components/Formulario';
-import React from 'react';
 
 const App = () => {
+  const [busqueda, setBusqueda] = useState({
+    ciudad: '',
+    pais: '',
+  });
   const ocultarTeclado = () => {
     Keyboard.dismiss();
   };
@@ -16,7 +20,7 @@ const App = () => {
       <TouchableWithoutFeedback onPress={() => ocultarTeclado()}>
         <View style={styles.app}>
           <View style={styles.contenido}>
-            <Formulario />
+            <Formulario busqueda={busqueda} setBusqueda={setBusqueda} />
           </View>
         </View>
       </TouchableWithoutFeedback>
