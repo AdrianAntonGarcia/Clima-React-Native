@@ -1,8 +1,12 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
 export interface Props {
-  resultado: {name: string; main: {temp: number}};
+  resultado: {
+    name: string;
+    main: {temp: number; temp_min: number; temp_max: number};
+    weather: Array<any>;
+  };
 }
 
 export const Clima: React.FC<Props> = ({resultado}) => {
@@ -17,7 +21,27 @@ export const Clima: React.FC<Props> = ({resultado}) => {
       <Text style={[styles.texto, styles.actual]}>
         {parseInt((main.temp - kelvin).toString(), 10)}
         <Text style={styles.temperatura}>&#x2103;</Text>
+        <Image
+          style={styles.imagen}
+          source={{
+            uri: `http://openweathermap.org/img/w/${resultado.weather[0].icon}.png`,
+          }}
+        />
       </Text>
+      <View style={styles.temperaturas}>
+        <Text style={styles.texto}>
+          Min{' '}
+          <Text style={styles.temperatura}>
+            {parseInt((main.temp_min - kelvin).toString(), 10)} &#x2103;
+          </Text>
+        </Text>
+        <Text style={styles.texto}>
+          Max{' '}
+          <Text style={styles.temperatura}>
+            {parseInt((main.temp_max - kelvin).toString(), 10)} &#x2103;
+          </Text>
+        </Text>
+      </View>
     </View>
   );
 };
@@ -39,7 +63,15 @@ const styles = StyleSheet.create({
   },
   temperatura: {
     fontSize: 24,
-    fontWeight: 'normal',
+    fontWeight: 'bold',
+  },
+  imagen: {
+    width: 66,
+    height: 58,
+  },
+  temperaturas: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 export default Clima;
