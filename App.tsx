@@ -1,4 +1,5 @@
 import {
+  Alert,
   Keyboard,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -13,15 +14,30 @@ const App = () => {
     pais: '',
   });
   const [consultar, setConsultar] = useState(false);
+  const [resultado, setResultado] = useState({});
   const {ciudad, pais} = busqueda;
   useEffect(() => {
-    if (consultar) {
-      const appId = 'a09fbd3822a8c4b3edda687a93d7ed83';
-      const url = `api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
-      console.log(url);
-      setConsultar(false);
-    }
+    const consultarClima = async () => {
+      if (consultar) {
+        const appId = 'a09fbd3822a8c4b3edda687a93d7ed83';
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
+        try {
+          const respuesta = await fetch(url);
+          const resultadoApi = await respuesta.json();
+          setResultado(resultadoApi);
+        } catch (error) {
+          mostrarAlerta();
+        }
+        setConsultar(false);
+      }
+    };
+    consultarClima();
   }, [ciudad, consultar, pais]);
+  const mostrarAlerta = () => {
+    Alert.alert('Error', 'No hay resultados, intenta con otra ciudad o páis', [
+      {text: 'Ok'},
+    ]);
+  };
   const ocultarTeclado = () => {
     Keyboard.dismiss();
   };
