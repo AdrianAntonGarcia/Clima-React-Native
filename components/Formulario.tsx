@@ -20,15 +20,19 @@ export const Formulario = () => {
           />
         </View>
         <View>
-          <Picker itemStyle={styles.picker}>
-            <Picker.Item label="-- Seleccione un páis --" value="" />
-            <Picker.Item label="Estados Unidos" value="US" />
-            <Picker.Item label="España" value="ES" />
-            <Picker.Item label="México" value="MX" />
-            <Picker.Item label="Argentina" value="AR" />
-            <Picker.Item label="Colombia" value="CO" />
-            <Picker.Item label="Costa Rica" value="CR" />
-            <Picker.Item label="Perú" value="PE" />
+          <Picker style={styles.picker}>
+            <Picker.Item
+              color="#FFF"
+              label="-- Seleccione un páis --"
+              value=""
+            />
+            <Picker.Item color="#FFF" label="Estados Unidos" value="US" />
+            <Picker.Item color="#FFF" label="España" value="ES" />
+            <Picker.Item color="#FFF" label="México" value="MX" />
+            <Picker.Item color="#FFF" label="Argentina" value="AR" />
+            <Picker.Item color="#FFF" label="Colombia" value="CO" />
+            <Picker.Item color="#FFF" label="Costa Rica" value="CR" />
+            <Picker.Item color="#FFF" label="Perú" value="PE" />
           </Picker>
         </View>
         <TouchableWithoutFeedback>
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   picker: {
-    height: 200,
+    height: 120,
     backgroundColor: '#FFF',
   },
   btnBuscar: {
