@@ -1,6 +1,6 @@
 import {
-  Animated,
   Alert,
+  Animated,
   StyleSheet,
   Text,
   TextInput,
@@ -13,9 +13,14 @@ import {Picker} from '@react-native-picker/picker';
 export interface Props {
   busqueda: {pais: string; ciudad: string};
   setBusqueda: Function;
+  setConsultar: Function;
 }
 
-export const Formulario: React.FC<Props> = ({busqueda, setBusqueda}) => {
+export const Formulario: React.FC<Props> = ({
+  busqueda,
+  setBusqueda,
+  setConsultar,
+}) => {
   const {pais, ciudad} = busqueda;
   const [animacionBoton] = useState(new Animated.Value(1));
   const consultarClima = () => {
@@ -23,8 +28,9 @@ export const Formulario: React.FC<Props> = ({busqueda, setBusqueda}) => {
       mostrarAlerta();
       return;
     }
+    // Consultar la API
+    setConsultar(true);
   };
-
   const mostrarAlerta = () => {
     Alert.alert('Error', 'Agrega una ciudad y país para la búsqueda', [
       {text: 'Entendido'},
@@ -63,7 +69,7 @@ export const Formulario: React.FC<Props> = ({busqueda, setBusqueda}) => {
         </View>
         <View>
           <Picker
-            onValueChange={paisIn => setBusqueda({...busqueda, paisIn})}
+            onValueChange={paisIn => setBusqueda({...busqueda, pais: paisIn})}
             selectedValue={pais}
             style={styles.picker}>
             <Picker.Item
