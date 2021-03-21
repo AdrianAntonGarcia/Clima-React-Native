@@ -1,14 +1,33 @@
 import {
+  Animated,
   StyleSheet,
   Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
-import React from 'react';
 
 export const Formulario = () => {
+  const [animacionBoton] = useState(new Animated.Value(1));
+  const animacionEntrada = () => {
+    Animated.spring(animacionBoton, {
+      toValue: 0.9,
+      useNativeDriver: true,
+    }).start();
+  };
+  const animacionSalida = () => {
+    Animated.spring(animacionBoton, {
+      toValue: 1,
+      friction: 2,
+      tension: 30,
+      useNativeDriver: true,
+    }).start();
+  };
+  const estiloAnimacion = {
+    transform: [{scale: animacionBoton}],
+  };
   return (
     <>
       <View>
@@ -35,10 +54,12 @@ export const Formulario = () => {
             <Picker.Item color="#FFF" label="Perú" value="PE" />
           </Picker>
         </View>
-        <TouchableWithoutFeedback>
-          <View style={styles.btnBuscar}>
+        <TouchableWithoutFeedback
+          onPressIn={() => animacionEntrada()}
+          onPressOut={() => animacionSalida()}>
+          <Animated.View style={[styles.btnBuscar, estiloAnimacion]}>
             <Text style={styles.textoBuscar}>Buscar Clima</Text>
-          </View>
+          </Animated.View>
         </TouchableWithoutFeedback>
       </View>
     </>
