@@ -1,19 +1,27 @@
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Formulario from './components/Formulario';
 import React from 'react';
 
 const App = () => {
   return (
-    <ScrollView style={styles.general}>
-      <Formulario />
-    </ScrollView>
+    <>
+      <View style={styles.app}>
+        <View style={styles.contenido}>
+          <Formulario />
+        </View>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  general: {
-    backgroundColor: '#FFF',
-    height: '100%',
+  app: {
+    flex: 1,
+    backgroundColor: 'rgb(71,149,212)',
+    justifyContent: 'center',
+  },
+  contenido: {
+    marginHorizontal: '2.5%',
   },
 });
 
